@@ -22,3 +22,11 @@ dump moviesRatingCount;
 ratingMovies4 = filter Movies by (rating > 3.0 and rating < 4.0);
 movies = foreach ratingMovies4 generate $0,$1;
 store movies into 'movies' using PigStorage(',');
+
+-- D. Find the number of movies with duration more than 2 hours (7200 second).
+moviesmorethan2hrs = filter Movies by (duration > 7200);
+tmpmovies = foreach moviesmorethan2hrs generate $1,1;
+groupbymoviescount = group tmpmovies by $1;
+moviesCount = foreach groupbymoviescount generate 'Movie count having duration more than 2 hours', COUNT($1);
+dump moviesCount;
+
