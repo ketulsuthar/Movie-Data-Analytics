@@ -35,4 +35,8 @@ groupByYear = group Movies by $2;
 moviescountByYear = foreach groupByYear generate group, COUNT($1);
 store moviescountByYear into 'moviescountByYear' using PigStorage(',');
 
---
+-- F. Find the total number of movies in the dataset.
+moviesTotal = foreach Movies generate $1, 1;
+groupByMovies = group moviesTotal by $1;
+totalmovies = foreach groupByMovies generate 'Total Movies :', COUNT($1);
+dump totalmovies;
