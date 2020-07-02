@@ -12,4 +12,8 @@ dump countMovies;
 
 -- B. Find the number of movies having rating more than 4.
 
-ratingmov
+ratingMovies4 = filter Movies by (rating > 4.0);
+tmpMovies = foreach ratingMovies4 generate $1,1;
+groupByCount = group tmpMovies by $1;
+moviesRatingCount = foreach groupByCount generate 'Rating more than 4.0 Movies Count', COUNT($1);
+dump moviesRatingCount;
