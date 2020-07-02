@@ -30,3 +30,9 @@ groupbymoviescount = group tmpmovies by $1;
 moviesCount = foreach groupbymoviescount generate 'Movie count having duration more than 2 hours', COUNT($1);
 dump moviesCount;
 
+-- E. Find the list of years and number of movies released each year.
+groupByYear = group Movies by $2;
+moviescountByYear = foreach groupByYear generate group, COUNT($1);
+store moviescountByYear into 'moviescountByYear' using PigStorage(',');
+
+--
