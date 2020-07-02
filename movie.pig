@@ -17,3 +17,8 @@ tmpMovies = foreach ratingMovies4 generate $1,1;
 groupByCount = group tmpMovies by $1;
 moviesRatingCount = foreach groupByCount generate 'Rating more than 4.0 Movies Count', COUNT($1);
 dump moviesRatingCount;
+
+-- C. Find the movies whose rating are between 3 and 4.
+ratingMovies4 = filter Movies by (rating > 3.0 and rating < 4.0);
+movies = foreach ratingMovies4 generate $0,$1;
+store movies into 'movies' using PigStorage(',');
